@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="easyUI/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="easyUI/themes/icon.css">
+
+<script type="text/javascript" src="easyUI/jquery.min.js"></script>
+<script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
+
+<script type="text/javascript">
+	var data = [ {
+		text : 'Item1',
+		iconCls : 'icon-sum',
+		state : 'open',
+		children : [ {
+			text : '基本信息',
+			url : 'index.html'
+		}, {
+			text : '图书修改',
+			url : '../0606-easyUI/index.html'
+		}, {
+			text : 'Option3',
+			children : [ {
+				text : '新增'
+			}, {
+				text : 'Option32'
+			} ]
+		} ]
+	}, {
+		text : 'Item2',
+		iconCls : 'icon-more',
+		children : [ {
+			text : 'Option4'
+		}, {
+			text : 'Option5'
+		}, {
+			text : 'Option6'
+		} ]
+	} ];
+
+	function toggle() {
+		var opts = $('#sm').sidemenu('options');
+		$('#sm').sidemenu(opts.collapsed ? 'expand' : 'collapse');
+		opts = $('#sm').sidemenu('options');
+		$('#sm').sidemenu('resize', {
+			width : opts.collapsed ? 60 : 200
+		})
+	}
+	function selectMenu(item) {
+		if ($("#tt").tabs('exists', item.text)) {
+			$("#tt").tabs('select', item.text)
+		} else {
+			$("#tt").tabs(
+					'add',
+					{
+						title : item.text,
+						selected : true,
+						closable : true,
+						content : "<iframe src='" + item.url
+								+ "' style='width:100%;height:100%;'</iframe>"
+					})
+		}
+	}
+</script>
+</head>
+<body>
+	<div class="easyui-layout" style="width: 100%; height: 600px;">
+		<div id="p" data-options="region:'west'" title="菜单栏"
+			style="width: 15%;">
+			<div class="easyui-accordion" style="width: 100%; height: auto;">
+				
+				<div id="sm" title="会员中心" data-options="iconCls:'icon-search'"
+					style="padding: 10px;">
+					<div id="sm" class="easyui-sidemenu" style="width: 100%"
+						data-options="
+					data:data,
+					onSelect:selectMenu
+					"></div>
+				</div>
+
+			</div>
+		</div>
+		
+			<div id="tt" class="easyui-tabs" style="width: 100%; height: 100%"></div>
+		
+	</div>
+</body>
+</html>
