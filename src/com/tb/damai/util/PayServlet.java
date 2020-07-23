@@ -27,20 +27,18 @@ public class PayServlet extends HttpServlet {
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String out_trade_no = "20181038";
+        String out_trade_no = "36";
         //付款金额，必填
         String total_amount = "2000";
         //订单名称，必填
         String subject = "支付宝测试";
         //商品描述，可空
         String body = "商品描述";
-
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\"," 
                 + "\"total_amount\":\""+ total_amount +"\"," 
                 + "\"subject\":\""+ subject +"\"," 
                 + "\"body\":\""+ body +"\"," 
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-
         //请求
         String result;
         try {

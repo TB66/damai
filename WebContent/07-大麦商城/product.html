@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+<style type="text/css">
+table.gridtable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+</head>
+<body>
+	<div id="app">
+		书名<input v-model="name"> 作者<input v-model="author">
+		日期<input v-model="date">
+		<button @click="query">查询</button>
+		<a href="modify.html">新增</a>
+		<table style="width: 100%" border="1" class="gridtable">
+			<tr>
+				<td>id</td>
+				<td>pname</td>
+				<td>market_price</td>
+				<td>shop_price</td>
+				<td>image</td>
+				<td>pdesc</td>
+				<td>is_hot</td>
+				<td>cid</td>
+				<td colspan="2">操作</td>
+			</tr>
+			<tr v-for="product in list">
+				<td>{{product.id}}</td>
+				<td>{{product.pname}}</td>
+				<td>{{product.market_price}}</td>
+				<td>{{product.shop_price}}</td>
+				<td><img :src="product.image" height="100px"></td>
+				<td>{{product.pdesc}}</td>
+				<td>{{product.is_hot}}</td>
+				<td>{{product.cid}}</td>
+				<td><a :href="'modify.html#'+product.id">修改</a></td>
+				<td><button @click="del(product.id)">删除</button></td>
+			</tr>
+		</table>
+
+	</div>
+	<script type="text/javascript">
+			var vue = new Vue({
+				el: "#app",
+				data: {
+					list : [],
+					name:"",
+					author:"",
+					date:"",
+					
+				},
+				created: function() {
+					this.query();
+					
+				},
+				methods:{
+					query(){
+						axios.get("/damai/ProductServlet.do?op=queryAll").then(res=>{
+							this.list = res.data.list;
+						});
+					}
+					
+				}
+			});
+		</script>
+</body>
+</html>

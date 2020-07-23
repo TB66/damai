@@ -3,6 +3,7 @@ package com.tb.damai.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.tb.damai.po.DmProduct;
 import com.tb.damai.util.DBHelper;
@@ -55,5 +56,7 @@ public class ProductDao {
 		return new DBHelper().query(sql, DmProduct.class, params.toArray());
 		
 	}
-	
+	public List<Map<String, Object>> queryAll(){
+		return new DBHelper().query("select * from dm_product");
+	}
 }

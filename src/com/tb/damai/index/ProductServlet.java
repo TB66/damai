@@ -3,6 +3,7 @@ package com.tb.damai.index;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,5 +45,11 @@ public class ProductServlet extends BaseServlet {
 		DmProduct product=new DmProduct();
 		product.setId(Integer.valueOf(request.getParameter("pid")));
 		query(request, response,product);
+	}
+	protected void queryAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Map<String, Object>> list=new ProductDao().queryAll();
+		HashMap<String, Object> page=new HashMap<String, Object>();
+		page.put("list", list);
+		print( response, page);
 	}
 }
